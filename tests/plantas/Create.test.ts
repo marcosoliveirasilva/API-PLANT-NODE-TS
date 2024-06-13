@@ -26,5 +26,5 @@ describe('Plantas - Create', () => {
     expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
     expect(res1.body).toHaveProperty('errors.body.nome');
     expect(res1.body).toHaveProperty('errors.body.nome_cientifico');
-  })
+  });
 });
