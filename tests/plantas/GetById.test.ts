@@ -28,6 +28,6 @@ describe('Plantas - GetById', () => {
       .send();
 
     expect(resGetById.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(resGetById.body).toHaveProperty('errors.deault');
+    expect(resGetById.body).toHaveProperty('errors.default');
   });
 });

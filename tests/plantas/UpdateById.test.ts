@@ -32,6 +32,6 @@ describe('Plantas - UpdateById', () => {
       });
 
     expect(resUpdateById.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(resUpdateById.body).toHaveProperty('errors.deault');
+    expect(resUpdateById.body).toHaveProperty('errors.default');
   });
 });
