@@ -4,7 +4,7 @@ import * as create from './Create';
 import * as updateById from './UpdateById';
 import * as deleteByID from './DeleteById';
 
-export const PlantaController = {
+export const Controller = {
   ...getAll,
   ...getById,
   ...create,

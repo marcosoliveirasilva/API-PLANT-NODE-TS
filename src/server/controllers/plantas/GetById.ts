@@ -3,7 +3,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from "http-status-codes";
-import { PlantasProvider } from "../../database/providers/plantas";
+import { plantas } from "../../database/providers";
 
 interface IParamsProps {
   id?: number;
@@ -24,7 +24,7 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  const result = await PlantasProvider.getById(req.params.id);
+  const result = await plantas.Provider.getById(req.params.id);
   console.log(result);
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

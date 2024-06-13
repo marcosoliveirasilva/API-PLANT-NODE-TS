@@ -3,25 +3,31 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from "http-status-codes";
+import { IDoenca } from "../../database/models";
+import { doencas } from "../../database/providers/";
 
-interface IDoenca {
-  nome: String;
-  nome_cientifico: String;
-  sobre: String;
-  fonte: String;
-};
+interface IBodyProps extends Omit<IDoenca, 'id' | 'created_at' | 'updated_at'> {};
 
 export const createValidation = validation((getSchema) => ({
-  body: getSchema<IDoenca>(yup.object().shape({
+  body: getSchema<IBodyProps>(yup.object().shape({
     nome: yup.string().required().min(3),
-    nome_cientifico: yup.string().required().min(3),
-    sobre: yup.string().required().min(3),
-    fonte: yup.string().required().url(),
+    nomeCientifico: yup.string().required().min(3),
+    sobre: yup.string().required().min(3).max(750),
+    fonte: yup.string().required().min(3).max(750),
   })),
 }));
 
 export const create = async (req: Request<{}, {}, IDoenca>, res: Response) => {
+  const result = await doencas.Provider.create(req.body);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        desfault: result.message
+      }
+    });
+  }
 
 
-  return res.status(StatusCodes.CREATED).json(1);
+  return res.status(StatusCodes.CREATED).json(result);
 }

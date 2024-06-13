@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
-import { PlantasProvider } from "../../database/providers/plantas";
+import { plantas } from "../../database/providers/";
 import { StatusCodes } from "http-status-codes";
 
 interface IParamsProps {
@@ -24,7 +24,7 @@ export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  const result = await PlantasProvider.deleteById(req.params.id);
+  const result = await plantas.Provider.deleteById(req.params.id);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

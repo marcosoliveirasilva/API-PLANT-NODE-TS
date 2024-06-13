@@ -6,7 +6,7 @@ import * as getAll from './GetAll';
 import * as count from './Count';
 
 
-export const DiagnosticosProvider = {
+export const Provider = {
   ...deleteById,
   ...updateById,
   ...getById,

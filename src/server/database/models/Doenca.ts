@@ -3,7 +3,7 @@
 export interface IDoenca {
   id: number;
   nome: string;
-  nome_cientifico: string;
+  nomeCientifico: string;
   sobre: string;
   fonte: string;
   created_at: Date;
