@@ -3,12 +3,12 @@ import { IPlanta } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const getAll = async (page: number, limit: number, name: string, id = 0): Promise<IPlanta[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<IPlanta[] | Error> => {
   try {
     const result = await Knex(ETableNames.planta)
       .select('*')
       .where('id', Number(id))
-      .orWhere('nome', 'like', `%${name}%`)
+      .orWhere('nome', 'like', `%${filter}%`)
       .offset((page - 1) * limit)
       .limit(limit);
 

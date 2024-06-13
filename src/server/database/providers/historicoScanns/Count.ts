@@ -2,10 +2,11 @@ import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
 
 
-export const count = async (name = ''): Promise<number | Error> => {
+export const count = async (personID = 0, diagnosticID = 0): Promise<number | Error> => {
   try {
-    const [{ count }] = await Knex(ETableNames.planta)
-      .where('nome', 'like', `%${name}%`)
+    const [{ count }] = await Knex(ETableNames.historicoScann)
+      .where('pessoaID', Number(personID))
+      .orWhere('diagnosticoID', Number(diagnosticID))
       .count<[{ count: number }]>('* as count');
 
     if (Number.isInteger(Number(count))) return Number(count);

@@ -18,11 +18,11 @@ export async function up(knex: Knex) {
 
       table.string('nomeEmpresa').index().notNullable();
       table.string('nomeFantasia').index().notNullable();
-      table.bigInteger('cnpj').checkLength('<=', 14).index().notNullable();
+      table.string('cnpj').checkLength('<=', 14).index().notNullable();
       table.string('urlSite').unique().notNullable();
       table.string('email').unique().notNullable();
-      table.bigInteger('telefoneCelular').checkLength('<=', 11).unique().notNullable();
-      table.bigInteger('telefoneFixo').checkLength('<=', 10).unique().nullable();
+      table.string('telefoneCelular').checkLength('<=', 11).unique().notNullable();
+      table.string('telefoneFixo').checkLength('<=', 10).unique().nullable();
       table.string('endereco').notNullable();
       table.string('latitude').notNullable();
       table.string('longitude').notNullable();

@@ -1,12 +1,12 @@
 import { ETableNames } from '../../ETableNames';
-import { IPlanta } from '../../models';
+import { IDiagnostico } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const updateById = async (id: number, planta: Omit<IPlanta, 'id' | 'created_at' | 'updated_at'>): Promise<void | Error> => {
+export const updateById = async (id: number, diagnostico: Omit<IDiagnostico, 'id' | 'created_at' | 'updated_at'>): Promise<void | Error> => {
   try {
     const result = await Knex(ETableNames.planta)
-      .update(planta)
+      .update(diagnostico)
       .where('id', '=', id);
 
     if (result > 0) return;

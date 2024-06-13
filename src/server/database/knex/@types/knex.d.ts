@@ -1,10 +1,26 @@
-import { IPlanta } from "../../models";
+import {
+  IPlanta,
+  IDoenca,
+  IDiagnostico,
+  IPessoa,
+  IFornecedor,
+  IProduto,
+  IProdutoDiagnostico,
+  IHistoricoScann
+} from "../../models";
 
 declare module 'knex/types/table' {
   interface Tables {
     planta: IPlanta
-    // doenca: IDoenca
-    // pessoa: IPessoa
-    // usuario: IUsuario
+    doenca: IDoenca
+    diagnostico: IDiagnostico
+    imgDiagnostico: IImgDiagnostico
+    pessoa: IPessoa
+    usuario: IUsuario
+    fornecedor: IFornecedor
+    produto: IProduto
+    imgProduto: IImgProduto
+    produtoDiagnostico: IProdutoDiagnostico
+    historicoScann: IHistoricoScann
   }
 }

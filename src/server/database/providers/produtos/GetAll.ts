@@ -1,19 +1,20 @@
 import { ETableNames } from '../../ETableNames';
-import { IPlanta } from '../../models';
+import { IProduto } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const getAll = async (page: number, limit: number, name: string, id = 0): Promise<IPlanta[] | Error> => {
+export const getAll = async (page: number, limit: number, supplierId: number, name: string, id = 0): Promise<IProduto[] | Error> => {
   try {
-    const result = await Knex(ETableNames.planta)
+    const result = await Knex(ETableNames.produto)
       .select('*')
       .where('id', Number(id))
-      .orWhere('nome', 'like', `%${name}%`)
+      .orWhere('fornecedorID', Number(supplierId))
+      .orWhere('nomeProduto', 'like', `%${name}%`)
       .offset((page - 1) * limit)
       .limit(limit);
 
     if (id > 0 && result.every(item => item.id !== id)) {
-      const resultById = await Knex(ETableNames.planta)
+      const resultById = await Knex(ETableNames.produto)
         .select('*')
         .where('id', '=', id)
         .first();
