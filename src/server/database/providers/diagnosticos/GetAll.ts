@@ -3,7 +3,7 @@ import { IDiagnostico } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const getAll = async (page: number, limit: number, deseaseID: string, plantID: string, id = 0):
+export const getAll = async (page: number, limit: number, deseaseID: number, plantID: number, id = 0):
 Promise<IDiagnostico[] | Error> => {
   try {
     const result = await Knex(ETableNames.diagnostico)
@@ -25,6 +25,7 @@ Promise<IDiagnostico[] | Error> => {
 
     return result;
   } catch (error) {
+
     console.log(error);
     return new Error('Erro ao consultar os registros');
   }
