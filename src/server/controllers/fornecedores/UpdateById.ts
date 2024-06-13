@@ -2,23 +2,27 @@ import { Request, Response } from "express";
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
-import { IPessoa } from "../../database/models";
+import { IFornecedor } from "../../database/models";
 import { StatusCodes } from "http-status-codes";
-import { pessoas } from "../../database/providers";
+import { fornecedores } from "../../database/providers";
 
 interface IParamsProps {
   id?: number;
 };
 
-interface IBodyProps extends Omit<IPessoa, 'id' | 'created_at' | 'updated_at'> {};
+interface IBodyProps extends Omit<IFornecedor, 'id' | 'created_at' | 'updated_at'> {};
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object().shape({
-    nomeCompleto: yup.string().required().min(3),
-    cpf: yup.string().required().min(11).max(11),
-    email: yup.string().required(),
-    telefoneCelular: yup.string().required().min(11).max(11),
-    telefoneFixo: yup.string().optional().min(10).max(10),
+    pessoaID: yup.number().required(),
+    nomeEmpresa: yup.string().required().min(3),
+    nomeFantasia: yup.string().required().min(3),
+    cnpj: yup.string().required().length(14),
+    urlSite: yup.string().required().url(),
+    email: yup.string().required().email(),
+    telefoneCelular: yup.string().required().length(11),
+    telefoneFixo: yup.string().optional().length(10),
+    endereco: yup.string().required().min(3),
     latitude: yup.string().required(),
     longitude: yup.string().required(),
   })),
@@ -36,7 +40,7 @@ export const updateById = async (req: Request<IParamsProps, {}, IBodyProps>, res
     });
   }
 
-  const result = await pessoas.Provider.updateById(req.params.id, req.body);
+  const result = await fornecedores.Provider.updateById(req.params.id, req.body);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
