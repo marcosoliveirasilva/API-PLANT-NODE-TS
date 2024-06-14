@@ -6,6 +6,7 @@ import pessoasRoutes from './pessoas.routes';
 import fornecedoresRoutes from './fornecedores.routes';
 import produtosRoutes from './produtos.routes';
 import produtosDiagnosticosRoutes from './produtosDiagnosticos.routes';
+import historicoScannsRoutes from './historicoScanns.routes';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/pessoas', pessoasRoutes);
 router.use('/fornecedores', fornecedoresRoutes);
 router.use('/produtos', produtosRoutes);
 router.use('/produtosDiagnosticos', produtosDiagnosticosRoutes);
+router.use('/historicoScanns', historicoScannsRoutes);
 
 export { router };
