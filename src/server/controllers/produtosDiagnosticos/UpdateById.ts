@@ -2,20 +2,27 @@ import { Request, Response } from "express";
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
+import { IProdutoDiagnostico } from "../../database/models";
 import { StatusCodes } from "http-status-codes";
-import { fornecedores } from "../../database/providers";
+import { produtosDiagnosticos } from "../../database/providers";
 
 interface IParamsProps {
   id?: number;
 };
 
-export const getByIdValidation = validation((getSchema) => ({
+interface IBodyProps extends Omit<IProdutoDiagnostico, 'id' | 'created_at' | 'updated_at'> {};
+
+export const updateByIdValidation = validation((getSchema) => ({
+  body: getSchema<IBodyProps>(yup.object().shape({
+    produtoID: yup.number().required(),
+    diagnosticoID: yup.number().required(),
+  })),
   params: getSchema<IParamsProps>(yup.object().shape({
     id: yup.number().integer().required().moreThan(0),
   })),
 }));
 
-export const getById = async (req: Request<IParamsProps>, res: Response) => {
+export const updateById = async (req: Request<IParamsProps, {}, IBodyProps>, res: Response) => {
   if (!req.params.id){
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
@@ -24,7 +31,8 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  const result = await fornecedores.Provider.getById(req.params.id);
+  const result = await produtosDiagnosticos.Provider.updateById(req.params.id, req.body);
+
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
@@ -33,5 +41,5 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 }

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
 import { StatusCodes } from "http-status-codes";
-import { fornecedores } from "../../database/providers";
+import { produtosDiagnosticos } from "../../database/providers";
 
 interface IParamsProps {
   id?: number;
@@ -24,7 +24,7 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  const result = await fornecedores.Provider.getById(req.params.id);
+  const result = await produtosDiagnosticos.Provider.getById(req.params.id);
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {

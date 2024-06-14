@@ -25,7 +25,6 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
   }
 
   const result = await pessoas.Provider.getById(req.params.id);
-  console.log(result);
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {

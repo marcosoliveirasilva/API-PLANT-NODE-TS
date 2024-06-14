@@ -3,7 +3,7 @@ import { IProdutoDiagnostico } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const getAll = async (page: number, limit: number, productID: string, diagnosticID: string, id = 0): Promise<IProdutoDiagnostico[] | Error> => {
+export const getAll = async (page: number, limit: number, productID: number, diagnosticID: number, id = 0): Promise<IProdutoDiagnostico[] | Error> => {
   try {
     const result = await Knex(ETableNames.produtoDiagnostico)
       .select('*')

@@ -5,6 +5,7 @@ import diagnosticosRoutes from './diagnosticos.routes';
 import pessoasRoutes from './pessoas.routes';
 import fornecedoresRoutes from './fornecedores.routes';
 import produtosRoutes from './produtos.routes';
+import produtosDiagnosticosRoutes from './produtosDiagnosticos.routes';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/diagnosticos', diagnosticosRoutes);
 router.use('/pessoas', pessoasRoutes);
 router.use('/fornecedores', fornecedoresRoutes);
 router.use('/produtos', produtosRoutes);
+router.use('/produtosDiagnosticos', produtosDiagnosticosRoutes);
 
 export { router };
