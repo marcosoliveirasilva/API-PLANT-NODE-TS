@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { pessoas } from '../controllers';
+import { EnsureAuthenticated } from "../shared/middleware";
 
 const router = Router();
 
-router.get('/', pessoas.Controller.getAllValidation, pessoas.Controller.getAll);
-router.get('/:id', pessoas.Controller.getByIdValidation, pessoas.Controller.getById);
-router.post('/', pessoas.Controller.createValidation, pessoas.Controller.create);
-router.put('/:id', pessoas.Controller.updateByIdValidation, pessoas.Controller.updateById);
-router.delete('/:id', pessoas.Controller.deleteByIdValidation, pessoas.Controller.deleteById);
+router.get('/', EnsureAuthenticated, pessoas.Controller.getAllValidation, pessoas.Controller.getAll);
+router.get('/:id', EnsureAuthenticated, pessoas.Controller.getByIdValidation, pessoas.Controller.getById);
+router.post('/', EnsureAuthenticated, pessoas.Controller.createValidation, pessoas.Controller.create);
+router.put('/:id', EnsureAuthenticated, pessoas.Controller.updateByIdValidation, pessoas.Controller.updateById);
+router.delete('/:id', EnsureAuthenticated, pessoas.Controller.deleteByIdValidation, pessoas.Controller.deleteById);
 
 export default router;

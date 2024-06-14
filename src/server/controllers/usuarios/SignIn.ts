@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 
 import { usuarios } from '../../database/providers';
+import { JWTService, PasswordCrypito } from '../../shared/services';
 import { validation } from '../../shared/middleware';
 import { IUsuario } from '../../database/models';
-import { PasswordCrypito } from '../../shared/services';
 
 
 interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'  | 'pessoaID' | 'created_at' | 'updated_at'> { }
@@ -21,8 +21,8 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
   const { email, senha } = req.body;
 
 
-  const result = await usuarios.Provider.getByEmail(email);
-  if (result instanceof Error) {
+  const usuario = await usuarios.Provider.getByEmail(email);
+  if (usuario instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou senha são inválidos'
@@ -30,14 +30,24 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   }
 
-  const passwordMatch = await PasswordCrypito.verifyPassword(senha, result.senha);
-  if (passwordMatch) {
+  const passwordMatch = await PasswordCrypito.verifyPassword(senha, usuario.senha);
+  if (!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou senha são inválidos'
       }
     });
   } else {
-    return res.status(StatusCodes.OK).json({ accessToken: 'teste.teste.teste' });
+    const accessToken = JWTService.sing({ uid: usuario.id });
+
+    if ( accessToken === 'JWT_SECRET_NOT_FOUND' ) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: 'Erro ao gerar o token de acesso'
+        }
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({ accessToken: accessToken });
   }
 };
