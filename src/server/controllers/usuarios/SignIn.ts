@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { usuarios } from '../../database/providers';
 import { validation } from '../../shared/middleware';
 import { IUsuario } from '../../database/models';
+import { PasswordCrypito } from '../../shared/services';
 
 
 interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'  | 'pessoaID' | 'created_at' | 'updated_at'> { }
@@ -29,7 +30,8 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   }
 
-  if (senha !== result.senha) {
+  const passwordMatch = await PasswordCrypito.verifyPassword(senha, result.senha);
+  if (passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou senha são inválidos'
