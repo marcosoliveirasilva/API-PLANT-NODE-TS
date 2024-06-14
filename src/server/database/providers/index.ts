@@ -8,3 +8,4 @@ export * as pessoas from './pessoas';
 export * as plantas from './plantas';
 export * as produtos from './produtos';
 export * as produtosDiagnosticos from './produtosDiagnosticos';
+export * as usuarios from './usuarios';

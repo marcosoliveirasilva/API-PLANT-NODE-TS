@@ -3,10 +3,11 @@ import {
   IDoenca,
   IDiagnostico,
   IPessoa,
+  IUsuario,
   IFornecedor,
   IProduto,
   IProdutoDiagnostico,
-  IHistoricoScann
+  IHistoricoScann,
 } from "../../models";
 
 declare module 'knex/types/table' {

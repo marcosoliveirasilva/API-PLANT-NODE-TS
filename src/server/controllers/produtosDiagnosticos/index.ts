@@ -11,5 +11,3 @@ export const Controller = {
   ...updateById,
   ...deleteByID,
 }
-
-

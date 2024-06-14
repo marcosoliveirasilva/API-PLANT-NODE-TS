@@ -6,3 +6,4 @@ export * as fornecedores from './fornecedores';
 export * as produtos from './produtos';
 export * as produtosDiagnosticos from './produtosDiagnosticos';
 export * as historicoScanns from './historicoScanns';
+export * as usuarios from './usuarios';

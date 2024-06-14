@@ -6,3 +6,4 @@ export * from './Fornecedor';
 export * from './Produto';
 export * from './ProdutoDiagnostico';
 export * from './HistoricoScann';
+export * from './Usuario';
