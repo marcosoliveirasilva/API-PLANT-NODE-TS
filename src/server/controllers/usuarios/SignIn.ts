@@ -7,6 +7,8 @@ import { JWTService, PasswordCrypito } from '../../shared/services';
 import { validation } from '../../shared/middleware';
 import { IUsuario } from '../../database/models';
 
+import { pessoas } from "../../database/providers";
+
 
 interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'  | 'pessoaID' | 'created_at' | 'updated_at'> { }
 
@@ -48,6 +50,12 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
       });
     }
 
-    return res.status(StatusCodes.OK).json({ accessToken: accessToken });
+    const resultPerson = await pessoas.Provider.getById(usuario.pessoaID);
+    const response = {
+      ...resultPerson,
+      accessToken: accessToken
+    };
+
+    return res.status(StatusCodes.OK).json(response);
   }
 };
