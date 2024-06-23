@@ -10,6 +10,7 @@ export const getAll = async (page: number, limit: number, supplierId: number, na
       .where('id', Number(id))
       .orWhere('fornecedorID', Number(supplierId))
       .orWhere('nomeProduto', 'like', `%${name}%`)
+      .orWhere('tipoProduto', 'like', `%${name}%`)
       .offset((page - 1) * limit)
       .limit(limit);
 

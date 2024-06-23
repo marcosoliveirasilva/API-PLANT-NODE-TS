@@ -9,7 +9,6 @@ export async function up(knex: Knex) {
       table.bigIncrements('id').primary().index();
       table.string('nomeCompleto').index().notNullable();
       table.string('cpf').checkLength('=', 11).index().notNullable();
-      table.string('email').unique().notNullable();
       table.string('telefoneCelular').checkLength('=', 11).unique().notNullable();
       table.string('telefoneFixo').checkLength('=', 10).unique().nullable();
       table.string('latitude').notNullable();

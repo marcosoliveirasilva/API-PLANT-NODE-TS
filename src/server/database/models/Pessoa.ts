@@ -4,7 +4,6 @@ export interface IPessoa {
   id: number;
   nomeCompleto: string;
   cpf: string;
-  email: string;
   telefoneCelular: string;
   telefoneFixo?: string;
   latitude: string;

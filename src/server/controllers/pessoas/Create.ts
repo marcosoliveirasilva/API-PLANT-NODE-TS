@@ -12,7 +12,6 @@ export const createValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object().shape({
     nomeCompleto: yup.string().required().min(3),
     cpf: yup.string().required().length(11),
-    email: yup.string().required().email(),
     telefoneCelular: yup.string().required().length(11),
     telefoneFixo: yup.string().optional().length(10),
     latitude: yup.string().required(),

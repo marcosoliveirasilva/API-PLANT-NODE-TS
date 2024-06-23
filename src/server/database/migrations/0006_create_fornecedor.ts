@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
         .index()
         .notNullable()
         .references('id')
-        .inTable(ETableNames.pessoa)
+        .inTable(ETableNames.usuario)
         .onUpdate('CASCADE')
         .onDelete('RESTRICT');
 

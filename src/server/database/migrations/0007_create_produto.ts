@@ -17,6 +17,7 @@ export async function up(knex: Knex) {
         .onDelete('RESTRICT');
 
       table.string('nomeProduto').index().notNullable();
+      table.string('tipoProduto').index().notNullable();
       table.string('descricao', 750).checkLength('<=', 750).notNullable();
       table.string('urlProduto').notNullable();
 
