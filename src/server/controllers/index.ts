@@ -7,3 +7,5 @@ export * as produtos from './produtos';
 export * as produtosDiagnosticos from './produtosDiagnosticos';
 export * as historicoScanns from './historicoScanns';
 export * as usuarios from './usuarios';
+export * as imgProdutos from './imgProdutos';
+export * as imgDiagnosticos from './imgDiagnosticos';

@@ -9,6 +9,8 @@ import produtosDiagnosticosRoutes from './produtosDiagnosticos.routes';
 import historicoScannsRoutes from './historicoScanns.routes';
 import usuariosRoutes from './usuarios.routes';
 import predizerScannsRoutes from './predizerScanns.routes';
+import imgProdutosRoutes from './imgProdutos.routes';
+import imgDiagnosticosRoutes from './imgDiagnosticos.routes';
 
 const router = Router();
 
@@ -22,5 +24,7 @@ router.use('/produtosDiagnosticos', produtosDiagnosticosRoutes);
 router.use('/historicoScanns', historicoScannsRoutes);
 router.use('/usuarios', usuariosRoutes);
 router.use('/predizerScanns', predizerScannsRoutes);
+router.use('/imgProdutos', imgProdutosRoutes);
+router.use('/imgDiagnosticos', imgDiagnosticosRoutes);
 
 export { router };

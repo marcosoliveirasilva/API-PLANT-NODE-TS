@@ -7,3 +7,5 @@ export * from './Produto';
 export * from './ProdutoDiagnostico';
 export * from './HistoricoScann';
 export * from './Usuario';
+export * from './ImgProduto';
+export * from './ImgDiagnostico';

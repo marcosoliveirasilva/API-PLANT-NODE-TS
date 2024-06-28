@@ -16,7 +16,7 @@ export async function up(knex: Knex) {
         .onUpdate('CASCADE')
         .onDelete('RESTRICT');
 
-      table.string('localizacao').notNullable();
+      table.string('url').notNullable();
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
 

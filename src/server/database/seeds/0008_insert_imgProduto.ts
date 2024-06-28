@@ -11,14 +11,14 @@ export const seed = async (knex: Knex) => {
 }
 
 const imgProdutos = [
-  {produtoID: 1, localizacao: '/images/produtos/1.jpg'},
-  {produtoID: 2, localizacao: '/images/produtos/2.jpg'},
-  {produtoID: 3, localizacao: '/images/produtos/3.jpg'},
-  {produtoID: 4, localizacao: '/images/produtos/4.jpg'},
-  {produtoID: 5, localizacao: '/images/produtos/5.jpg'},
-  {produtoID: 6, localizacao: '/images/produtos/6.jpg'},
-  {produtoID: 7, localizacao: '/images/produtos/7.jpg'},
-  {produtoID: 8, localizacao: '/images/produtos/8.jpg'},
-  {produtoID: 9, localizacao: '/images/produtos/9.jpg'},
-  {produtoID: 10, localizacao: '/images/produtos/10.jpg'},
+  {produtoID: 1, url: 'https://drive.google.com/uc?export=view&id=1BY8fi6IgjNQwEJ8yvOK4dVtDQSnSw0dP'},
+  {produtoID: 2, url: 'https://drive.google.com/uc?export=view&id=1B_M3AUFEY4UdwlL2GaMOH4eyGw9Zqg6b'},
+  {produtoID: 3, url: 'https://drive.google.com/uc?export=view&id=1Bya7_vr8O84yFi7cuNaOSBaHcddWd-7t'},
+  {produtoID: 4, url: 'https://drive.google.com/uc?export=view&id=1BzahxmTiuuxkB48-jFMoayGqVB8Skj_d'},
+  {produtoID: 5, url: 'https://drive.google.com/uc?export=view&id=1BKWqjeeEtuXVrEKnhUwHoXKOF9IW1Iw7'},
+  {produtoID: 6, url: 'https://drive.google.com/uc?export=view&id=1Bw38CpGirDY0XK6pTTA-kB59QUvZpIsi'},
+  {produtoID: 7, url: 'https://drive.google.com/uc?export=view&id=1Ba_fALoeIOlsOltBx33gMNtZxlWMilnu'},
+  {produtoID: 8, url: 'https://drive.google.com/uc?export=view&id=1BfMZT9s6CTXl7VS9VxWaQLNdyzOjYyv9'},
+  {produtoID: 9, url: 'https://drive.google.com/uc?export=view&id=1C3ap4yrZAQ6XQZesVm1r-wF67ZzwGhtl'},
+  {produtoID: 10, url: 'https://drive.google.com/uc?export=view&id=1Bfgk2oHMvA3xy878LFB1XyvHvo6-HHTo'},
 ];
