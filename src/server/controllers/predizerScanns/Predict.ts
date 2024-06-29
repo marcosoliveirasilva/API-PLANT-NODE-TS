@@ -3,7 +3,10 @@ import { loadModel } from '../../database/providers/predizerScann/PredictImage';
 import * as tf from '@tensorflow/tfjs-node';
 import Jimp from 'jimp';
 import { StatusCodes } from 'http-status-codes';
-import { diagnosticos } from '../../database/providers';
+
+import { diagnosticos, pessoas, usuarios } from '../../database/providers';
+import { historicoScanns } from "../../database/providers/";
+import { extractUidFromToken } from '../../shared/services';
 
 interface PredictRequest extends Request {
   file: {
@@ -40,20 +43,95 @@ export const predict = async (req: PredictRequest, res: Response) => {
 
     const predictedClassId = CLASS_ID[predictions.argMax(1).dataSync()[0]];
 
-    const result = await diagnosticos.Provider.getById(predictedClassId);
-    if (result instanceof Error) {
+    const resultDiagnostic = await diagnosticos.Provider.getById(predictedClassId);
+    if (resultDiagnostic instanceof Error) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         errors: {
-          default: result.message
+          default: resultDiagnostic.message
         }
       });
     }
 
-    res.status(StatusCodes.OK).json(result);
+    //Obter Id Usuário
+    const accessToken = req.headers.authorization?.split(' ')[1];
 
+    if (!accessToken) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        errors: {
+          default: 'Token não fornecido'
+        }
+      });
+    }
+
+    const uid = extractUidFromToken(accessToken);
+
+    if (!uid){
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        errors: {
+          default: 'Token inválido'
+        }
+      });
+    }
+
+    const userID = Number(uid);
+
+    if (isNaN(userID)) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        errors: {
+          default: 'UID inválido'
+        }
+      });
+    }
+
+    //Obter Usuário
+    const resultUser = await usuarios.Provider.getById(userID);
+
+    if (resultUser instanceof Error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: resultUser.message
+        }
+      });
+    }
+
+    //Obter Pessoa
+    const resultPerson = await pessoas.Provider.getById(resultUser.pessoaID);
+
+    if (resultPerson instanceof Error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: resultPerson.message
+        }
+      });
+    }
+
+    //Registrar Histórico
+    const reqHistoricoScanns = {
+      'usuarioID': userID,
+      'diagnosticoID': predictedClassId,
+      'latitude': resultPerson.latitude,
+      'longitude': resultPerson.longitude
+    }
+
+    const resultCreate = await historicoScanns.Provider.create(reqHistoricoScanns);
+
+    if (resultCreate instanceof Error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          desfault: resultCreate.message
+        }
+      });
+    }
+
+    //Retornar Predição
+    res.status(StatusCodes.OK).json(resultDiagnostic);
     //res.json({ class: predictedClass, confidence });
   } catch (error) {
     console.error("Error during processing:", error);
-    res.status(500).json({ error: "Error during file processing" });
+    res.status(500).json({
+      errors: {
+        desfault: "Erro durante o processamento do arquivo"
+      }
+    });
   }
 };

@@ -11,7 +11,7 @@ export const seed = async (knex: Knex) => {
 }
 
 const historicoScanns = [
-  {pessoaID: 1, diagnosticoID: 1},
-  {pessoaID: 1, diagnosticoID: 2},
-  {pessoaID: 1, diagnosticoID: 4},
+  {usuarioID: 1, diagnosticoID: 1, latitude: '-14.83509', longitude: '-40.8926901' },
+  {usuarioID: 1, diagnosticoID: 2, latitude: '-14.83509', longitude: '-40.8926901' },
+  {usuarioID: 1, diagnosticoID: 4, latitude: '-14.83509', longitude: '-40.8926901' },
 ];

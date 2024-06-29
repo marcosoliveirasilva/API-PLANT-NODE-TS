@@ -14,8 +14,10 @@ interface IBodyProps extends Omit<IHistoricoScann, 'id' | 'created_at' | 'update
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object().shape({
-    pessoaID: yup.number().required(),
+    usuarioID: yup.number().required(),
     diagnosticoID: yup.number().required(),
+    latitude: yup.string().required(),
+    longitude: yup.string().required(),
   })),
   params: getSchema<IParamsProps>(yup.object().shape({
     id: yup.number().integer().required().moreThan(0),

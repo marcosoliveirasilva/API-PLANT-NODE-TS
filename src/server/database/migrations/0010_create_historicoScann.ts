@@ -8,7 +8,7 @@ export async function up(knex: Knex) {
     .createTable(ETableNames.historicoScann, table => {
       table.bigIncrements('id').primary().index();
       table
-        .bigInteger('pessoaID')
+        .bigInteger('usuarioID')
         .index()
         .notNullable()
         .references('id')
@@ -23,7 +23,8 @@ export async function up(knex: Knex) {
         .inTable(ETableNames.diagnostico)
         .onUpdate('CASCADE')
         .onDelete('RESTRICT');
-
+      table.string('latitude').notNullable();
+      table.string('longitude').notNullable();
       table.comment('Tabela utilizada para armazenar o histórico de scanns realizadas por uma pessoa.');
     })
     .then(() => {

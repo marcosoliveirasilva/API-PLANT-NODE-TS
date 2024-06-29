@@ -3,12 +3,12 @@ import { IHistoricoScann } from '../../models';
 import { Knex } from '../../knex';
 
 
-export const getAll = async (page: number, limit: number, personID: number, diagnosticID: number, id = 0): Promise<IHistoricoScann[] | Error> => {
+export const getAll = async (page: number, limit: number, userID: number, diagnosticID: number, id = 0): Promise<IHistoricoScann[] | Error> => {
   try {
     const result = await Knex(ETableNames.historicoScann)
       .select('*')
       .where('id', Number(id))
-      .orWhere('pessoaID', Number(personID))
+      .orWhere('usuarioID', Number(userID))
       .orWhere('diagnosticoID', Number(diagnosticID))
       .offset((page - 1) * limit)
       .limit(limit);

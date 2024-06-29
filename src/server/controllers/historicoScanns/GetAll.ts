@@ -9,7 +9,7 @@ interface IQueryProps {
   id?: number;
   page?: number;
   limit?: number;
-  personID?: number;
+  userID?: number;
   diagnosticID?: number;
 }
 
@@ -18,7 +18,7 @@ export const getAllValidation = validation((getSchema) => ({
     page: yup.number().optional().moreThan(0),
     limit: yup.number().optional().moreThan(0),
     id: yup.number().integer().optional().default(0),
-    personID: yup.number().optional(),
+    userID: yup.number().optional(),
     diagnosticID: yup.number().optional(),
   })),
 }));
@@ -27,11 +27,11 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   const result = await historicoScanns.Provider.getAll(
     req.query.page || 1,
     req.query.limit || 7,
-    req.query.personID || 0,
+    req.query.userID || 0,
     req.query.diagnosticID || 0,
     Number(req.query.id)
   );
-  const count = await historicoScanns.Provider.count(req.query.personID, req.query.diagnosticID);
+  const count = await historicoScanns.Provider.count(req.query.userID, req.query.diagnosticID);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
