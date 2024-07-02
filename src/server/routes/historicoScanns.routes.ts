@@ -4,6 +4,8 @@ import { EnsureAuthenticated } from "../shared/middleware";
 
 const router = Router();
 
+router.get('/Me', EnsureAuthenticated, historicoScanns.Controller.getAllValidation, historicoScanns.Controller.getMe);
+router.get('/Markers', EnsureAuthenticated, historicoScanns.Controller.getAllValidation, historicoScanns.Controller.getMarker);
 router.get('/', EnsureAuthenticated, historicoScanns.Controller.getAllValidation, historicoScanns.Controller.getAll);
 router.get('/:id', EnsureAuthenticated, historicoScanns.Controller.getByIdValidation, historicoScanns.Controller.getById);
 router.post('/', EnsureAuthenticated, historicoScanns.Controller.createValidation, historicoScanns.Controller.create);

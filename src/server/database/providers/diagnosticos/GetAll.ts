@@ -6,22 +6,29 @@ import { Knex } from '../../knex';
 export const getAll = async (page: number, limit: number, deseaseID: number, plantID: number, id = 0):
 Promise<IDiagnostico[] | Error> => {
   try {
-    const result = await Knex(ETableNames.diagnostico)
-      .select('*')
-      .where('id', Number(id))
-      .orWhere('doencaID', deseaseID)
-      .orWhere('plantaID', plantID)
+    const result = await Knex(`${ETableNames.diagnostico} as a`)
+      .select(
+        'a.*',
+        'c.nome as nomePlanta',
+        'c.nomeCientifico as nomeCientificoPlanta',
+        'd.nome as nomeDoenca',
+        'd.nomeCientifico as nomeCientificoDoenca'
+      )
+      .join(`${ETableNames.planta} as c`, 'a.plantaID', 'c.id')
+      .join(`${ETableNames.doenca} as d`, 'a.doencaID', 'd.id')
+      .modify((queryBuilder) => {
+        if (deseaseID > 0) {
+          queryBuilder.where('a.doencaID', Number(deseaseID));
+        }
+        if (plantID > 0) {
+          queryBuilder.where('a.plantaID', Number(plantID));
+        }
+        if (id > 0) {
+          queryBuilder.where('a.id', Number(id));
+        }
+      })
       .offset((page - 1) * limit)
       .limit(limit);
-
-    if (id > 0 && result.every(item => item.id !== id)) {
-      const resultById = await Knex(ETableNames.diagnostico)
-        .select('*')
-        .where('id', '=', id)
-        .first();
-
-      if (resultById) return [...result, resultById];
-    }
 
     return result;
   } catch (error) {
