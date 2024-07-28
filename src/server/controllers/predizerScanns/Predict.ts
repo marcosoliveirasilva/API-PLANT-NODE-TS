@@ -14,8 +14,6 @@ interface PredictRequest extends Request {
   };
 }
 
-/*const CLASS_NAMES = ["Cereja Oídio", "Maçã Ferrugem", "Maçã Podridão Negra", "Maçã Sarna", "Morango Queimadura Na Folha",
-  "Uva Mancha Isariopsis", "Uva Podridão Negra", "Uva Sarampo Negro (Esca)"];*/
 const CLASS_ID = [1, 2, 3, 4, 5, 6, 7, 8];
 
 let model: tf.LayersModel;
@@ -38,8 +36,6 @@ export const predict = async (req: PredictRequest, res: Response) => {
     });
 
     const predictions = model.predict(imageTensor) as tf.Tensor;
-    //const predictedClass = CLASS_NAMES[predictions.argMax(1).dataSync()[0]];
-    //const confidence = Math.max(...predictions.dataSync());
 
     const predictedClassId = CLASS_ID[predictions.argMax(1).dataSync()[0]];
 
